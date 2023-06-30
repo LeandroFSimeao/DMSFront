@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
 
-const ClienteForm = () => {
-  const [nome, setNome] = useState('');
-  const [cnpj, setCnpj] = useState('');
+const ClienteForm = ({ onAddCliente }) => {
+  const [cliente, setCliente] = useState({
+    nome: '',
+    cnpj: '',
+    logradouro: '',
+    numero: 0,
+  });
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+    setCliente(prevCliente => ({
+      ...prevCliente,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = event => {
     event.preventDefault();
-    // Fazer a requisição POST para a API e adicionar um novo cliente
-    fetch('http://localhost:5233/Cliente', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ nome, cnpj }),
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Novo cliente adicionado:', data);
-        setNome('');
-        setCnpj('');
-      });
+    onAddCliente(cliente);
+    setCliente({
+      nome: '',
+      cnpj: '',
+      logradouro: '',
+      numero: 0,
+    });
   };
 
   return (
@@ -29,25 +34,51 @@ const ClienteForm = () => {
         <div className="mb-3">
           <label htmlFor="nome" className="form-label">Nome</label>
           <input
+            name='nome'
             type="text"
             className="form-control"
             id="nome"
-            value={nome}
-            onChange={event => setNome(event.target.value)}
+            value={cliente.nome}
+            onChange={handleChange}
             placeholder="Nome do cliente"
           />
         </div>
         <div className="mb-3">
           <label htmlFor="cnpj" className="form-label">CNPJ</label>
           <input
+            name='cnpj'
             type="text"
             className="form-control"
             id="cnpj"
-            value={cnpj}
-            onChange={event => setCnpj(event.target.value)}
+            value={cliente.cnpj}
+            onChange={handleChange}
             placeholder="CNPJ do cliente"
           />
         </div>
+        <div className="mb-3">
+          <label htmlFor="logradouro" className="form-label">Logradouro</label>
+          <input
+            name='logradouro'
+            type="text"
+            className="form-control"
+            id="logradouro"
+            value={cliente.logradouro}
+            onChange={handleChange}
+            placeholder="Logradouro do cliente"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="numero" className="form-label">Numero</label>
+          <input
+            name='numero'
+            type="number"
+            className="form-control"
+            id="numero"
+            value={cliente.numero}
+            onChange={handleChange}
+            placeholder="Numero do endereço"
+          />
+        </div>       
         <button type="submit" className="btn btn-primary">Adicionar</button>
       </form>
     </div>

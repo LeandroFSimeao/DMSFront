@@ -1,23 +1,38 @@
 import React from 'react';
+import { Button } from 'reactstrap';
 
-const ClienteItem = ({ cliente }) => {
+const ClienteItem = ({ cliente, onDelete, onPatch }) => {
+
   const handleDelete = () => {
-    // Fazer a requisição DELETE para a API para remover o Cliente
-    fetch(`http://localhost:5233/Cliente/${cliente.IdCliente}`, {
-      method: 'DELETE',
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Cliente removido:', data);
-        // Atualizar a lista de clientes
-      });
+    onDelete(cliente.idCliente);
+  };
+
+  const handleGeocodifica = () => {
+    onPatch(cliente.idCliente);
   };
 
   return (
-    <li className="list-group-item d-flex justify-content-between align-items-center">
-      {cliente.nome} - CNPJ: {cliente.cnpj}
-      <button onClick={handleDelete} className="btn btn-danger">Remover</button>
-    </li>
+    <tr key={cliente.IdCliente}>
+          <th scope="row">{cliente.idCliente}</th>
+          <td>{cliente.nome}</td>
+          <td>{cliente.cnpj}</td>
+          <td>{cliente.logradouro}</td>
+          <td>{cliente.numero}</td>
+          <td>{cliente.latitude}</td>
+          <td>{cliente.longitude}</td>
+          <td>
+            <div style={{width:"110px"}}>
+              {' '}
+              <Button color="primary" onClick={handleGeocodifica}>Geocodificar</Button>
+            </div>
+          </td>
+          <td>
+            <div style={{width:"110px"}}>
+              {' '}
+              <Button color="danger" onClick={handleDelete}>Remover</Button>
+            </div>
+          </td>
+        </tr>
   );
 };
 
