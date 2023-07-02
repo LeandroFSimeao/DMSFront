@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ClienteItem from './ClienteItem';
-import {Table, Button} from 'reactstrap';
+import {Table} from 'reactstrap';
 import ClienteForm from './ClienteForm';
+import { CSVLink } from "react-csv"
 
 const ClienteList = () => {
     const [clientes, setClientes] = useState([]);
@@ -19,6 +20,21 @@ const ClienteList = () => {
     const handleAddCliente = cliente => {
       fetch('http://localhost:5233/Cliente', {
         method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cliente),
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Novo cliente adicionado:', data);
+          fetchClientes(); // Buscar novamente a lista de clientes após a adição
+        });
+    };
+
+    const handleEditCliente = cliente => {
+      fetch('http://localhost:5233/Cliente', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -75,6 +91,7 @@ const ClienteList = () => {
           <th scope='col'>Longitude</th>
           <th scope='col'>Actions</th>
           <th scope='col'> </th>
+          <th scope='col'> </th>
         </tr>
       </thead>
       <tbody>
@@ -83,10 +100,20 @@ const ClienteList = () => {
             key={cliente.idCliente}
             cliente={ cliente}
             onDelete = {handleDeleteCliente}
-            onPatch = {handleGeocodificaCliente}/>
+            onPatch = {handleGeocodificaCliente}
+            onEdit = {handleEditCliente}
+            />
         ))}
       </tbody>
     </Table>
+    <CSVLink
+      filename={"db.csv"}
+      color="primary"
+      style={{float: "left", marginRight: "10px"}}
+      className="btn btn-primary"
+      data={clientes}>
+      Download CSV
+    </CSVLink>
     <ClienteForm onAddCliente={handleAddCliente} />
     </>
     );
