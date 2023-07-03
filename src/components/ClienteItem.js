@@ -19,7 +19,14 @@ const ClienteItem = ({ cliente, onDelete, onPatch, onEdit }) => {
   return (
     <>
         <tr key={cliente.IdCliente}>
-          <><th scope="row">{cliente.idCliente}</th><td>{cliente.nome}</td><td>{cliente.cnpj}</td><td>{cliente.logradouro}</td><td>{cliente.numero}</td><td>{cliente.latitude}</td><td>{cliente.longitude}</td><td>
+          <><th scope="row">{cliente.idCliente}</th>
+          <td>{cliente.nome}</td>
+          <td>{cliente.cnpj}</td>
+          <td>{cliente.logradouro}</td>
+          <td>{cliente.numero}</td>
+          <td>{cliente.latitude}</td>
+          <td>{cliente.longitude}</td>
+          <td>
             <div style={{ width: "110px" }}>
               {' '}
               <Button color="primary" onClick={handleGeocodifica}>Geocodificar</Button>
@@ -32,7 +39,7 @@ const ClienteItem = ({ cliente, onDelete, onPatch, onEdit }) => {
             </td>
             <td>
               <div style={{ width: "110px" }}>
-                <Button color="danger" onClick={handleDelete}>Remover</Button>
+                <Button color="danger" outline onClick={handleDelete}> Remover</Button>
                 {' '}
               </div>
             </td>

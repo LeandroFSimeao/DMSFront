@@ -9,7 +9,7 @@ const App = () => {
       <Container className='App'>
         <Row>
           <Col>
-          <h1 style={{margin: "20px 0"}}>CRUD Clientes</h1>
+          <h1 style={{margin: "20px 0"}}>Clientes</h1>
           </Col>
         </Row>
         <Row>
