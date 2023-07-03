@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const ClienteForm = ({ onAddCliente, onEditCliente, clienteInicial }) => {
+const ClienteForm = ({ onAddCliente, onEditCliente, clienteInicial, onLimpaCliente }) => {
   const [cliente, setCliente] = useState({
     nome: '',
     cnpj: '',
@@ -23,6 +23,10 @@ const ClienteForm = ({ onAddCliente, onEditCliente, clienteInicial }) => {
     }));
   };
 
+  const handleLimpaCliente = () => {
+    onLimpaCliente();
+  }
+
   const handleSubmit = event => {
     event.preventDefault();
     if (clienteInicial) {
@@ -40,9 +44,6 @@ const ClienteForm = ({ onAddCliente, onEditCliente, clienteInicial }) => {
 
   return (
     <div>
-      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clienteModal">
-        {clienteInicial ? 'Editar' : 'Adicionar Cliente'}
-      </button>
 
       <div className="modal fade" id="clienteModal" tabIndex="-1" aria-labelledby="clienteModalLabel" aria-hidden="true">
         <div className="modal-dialog">
@@ -51,7 +52,7 @@ const ClienteForm = ({ onAddCliente, onEditCliente, clienteInicial }) => {
               <h5 className="modal-title" id="clienteModalLabel">
               {clienteInicial ? 'Editar Cliente' : 'Adicionar Cliente'}
               </h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" onClick={handleLimpaCliente} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
@@ -103,7 +104,7 @@ const ClienteForm = ({ onAddCliente, onEditCliente, clienteInicial }) => {
                     placeholder="Numero do endereço"
                   />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">
                   {clienteInicial ? 'Editar CLiente' : 'Adicionar Cliente'}
                 </button>
               </form>

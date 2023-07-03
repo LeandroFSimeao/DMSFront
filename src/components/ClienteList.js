@@ -6,6 +6,7 @@ import { CSVLink } from "react-csv"
 
 const ClienteList = () => {
     const [clientes, setClientes] = useState([]);
+    const [selectedClient, setSelectedClient] = useState(null);
 
     useEffect(() => {
         fetchClientes();
@@ -16,6 +17,14 @@ const ClienteList = () => {
             .then(response => response.json())
             .then(data => setClientes(data));
     };
+
+    const handleSelectCLiente = cliente => {
+      setSelectedClient(cliente);
+    };
+
+    const handleLimpaSelectedCliente = () => {
+      setSelectedClient(null);
+    }
 
     const handleAddCliente = cliente => {
       fetch('http://localhost:5233/Cliente', {
@@ -29,6 +38,7 @@ const ClienteList = () => {
         .then(data => {
           console.log('Novo cliente adicionado:', data);
           fetchClientes(); // Buscar novamente a lista de clientes após a adição
+          setSelectedClient(null);
         });
     };
 
@@ -40,11 +50,18 @@ const ClienteList = () => {
         },
         body: JSON.stringify(cliente),
       })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Novo cliente adicionado:', data);
-          fetchClientes(); // Buscar novamente a lista de clientes após a adição
-        });
+      .then(response => {
+        if (response.status === 204) {
+          console.log('Cliente editado com sucesso.');
+          fetchClientes(); // Buscar novamente a lista de clientes após a remoção
+          setSelectedClient(null);
+        } else {
+          console.log('Erro ao editar o cliente.');
+        }
+      })
+      .catch(error => {
+        console.log('Erro ao editar o cliente:', error);
+      });
     };
 
     const handleDeleteCliente = idCliente => {
@@ -101,7 +118,7 @@ const ClienteList = () => {
             cliente={ cliente}
             onDelete = {handleDeleteCliente}
             onPatch = {handleGeocodificaCliente}
-            onEdit = {handleEditCliente}
+            onEdit = {handleSelectCLiente}
             />
         ))}
       </tbody>
@@ -114,7 +131,15 @@ const ClienteList = () => {
       data={clientes}>
       Download CSV
     </CSVLink>
-    <ClienteForm onAddCliente={handleAddCliente} />
+          <ClienteForm
+            onAddCliente={handleAddCliente}
+            onEditCliente={handleEditCliente}
+            clienteInicial={selectedClient}
+            onLimpaCliente={handleLimpaSelectedCliente}
+            />
+    <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clienteModal">
+        Adicionar
+    </button>
     </>
     );
 };

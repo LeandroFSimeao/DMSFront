@@ -4,9 +4,9 @@ import ClienteForm from './ClienteForm';
 
 const ClienteItem = ({ cliente, onDelete, onPatch, onEdit }) => {
 
-  const handleSaveEdit = clienteEditado => {
-    onEdit(clienteEditado);
-  }
+const handleSetClienteSelecionado = () => {
+  onEdit(cliente);
+}
 
   const handleDelete = () => {
     onDelete(cliente.idCliente);
@@ -18,8 +18,8 @@ const ClienteItem = ({ cliente, onDelete, onPatch, onEdit }) => {
 
   return (
     <>
-        <tr key={cliente.IdCliente}>
-          <><th scope="row">{cliente.idCliente}</th>
+      <tr key={cliente.IdCliente}>
+        <><th scope="row">{cliente.idCliente}</th>
           <td>{cliente.nome}</td>
           <td>{cliente.cnpj}</td>
           <td>{cliente.logradouro}</td>
@@ -32,19 +32,21 @@ const ClienteItem = ({ cliente, onDelete, onPatch, onEdit }) => {
               <Button color="primary" onClick={handleGeocodifica}>Geocodificar</Button>
             </div>
           </td><td>
-              <div style={{ width: "110px" }}>
-                {' '}
-                <ClienteForm clienteInicial={cliente} onEditCliente={handleSaveEdit} />
-              </div>
-            </td>
-            <td>
-              <div style={{ width: "110px" }}>
-                <Button color="danger" outline onClick={handleDelete}> Remover</Button>
-                {' '}
-              </div>
-            </td>
-            </>
-            </tr>
+            <div style={{ width: "110px" }}>
+              {' '}
+              <button type="button" onClick={handleSetClienteSelecionado} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clienteModal">
+                Edit
+              </button>
+            </div>
+          </td>
+          <td>
+            <div style={{ width: "110px" }}>
+              <Button color="danger" outline onClick={handleDelete}> Remover</Button>
+              {' '}
+            </div>
+          </td>
+        </>
+      </tr>
     </>
   );
 };
