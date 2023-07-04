@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from 'reactstrap';
-import ClienteForm from './ClienteForm';
 
 const ClienteItem = ({ cliente, onDelete, onPatch, onEdit }) => {
 
@@ -35,13 +34,13 @@ const handleSetClienteSelecionado = () => {
             <div style={{ width: "110px" }}>
               {' '}
               <button type="button" onClick={handleSetClienteSelecionado} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#clienteModal">
-                Edit
+                Editar
               </button>
             </div>
           </td>
           <td>
             <div style={{ width: "110px" }}>
-              <Button color="danger" outline onClick={handleDelete}> Remover</Button>
+              <Button color="danger" onClick={handleDelete}> Remover</Button>
               {' '}
             </div>
           </td>

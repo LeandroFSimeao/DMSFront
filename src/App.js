@@ -1,24 +1,17 @@
 import React from 'react';
-import ClienteList from './components/ClienteList';
-import ClienteForm from './components/ClienteForm';
+import ClienteList from './components/Cliente/ClienteList';
 import { Col, Container, Row } from 'reactstrap';
+import Navigation from './components/Navigation';
+import { Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
 
 const App = () => {
   return (
-    <div>
-      <Container className='App'>
-        <Row>
-          <Col>
-          <h1 style={{margin: "20px 0"}}>Clientes</h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <ClienteList />
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <Routes>
+      <Route index element={<Home />} />
+      <Route path='cliente' element={<ClienteList />} />
+      <Route path='pedido' element={<PedidoList />} />
+    </Routes>
   );
 };
 
