@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntrega }) => {
-  const [entrega, setEntrega] = useState({
+const ItemPedidoForm = ({ onAddItemPedido, onEditItemPedido, itemPedidoInicial, onLimpaItemPedido }) => {
+  const [itemPedido, setItemPedido] = useState({
     idCliente: 0,
     idEntrega: null,
     nf: '',
@@ -9,16 +9,16 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
     status: '',
     valor:'',
     peso:'',
-    dataEntrega: ''
+    dataItemPedido: ''
   });
   const [clientes, setClientes] = useState([]);
 
   useEffect(() => {
-    if(entregaInicial){
-      setEntrega(entregaInicial);
-      console.log(entregaInicial)
+    if(itemPedidoInicial){
+      setItemPedido(itemPedidoInicial);
+      console.log(itemPedidoInicial)
     }
-  }, [entregaInicial]);
+  }, [itemPedidoInicial]);
 
   useEffect(() => {
     fetch('http://localhost:5233/Cliente')
@@ -29,24 +29,24 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
 
   const handleChange = event => {
     const { name, value } = event.target;
-    setEntrega(prevEntrega => ({
-      ...prevEntrega,
+    setItemPedido(prevItemPedido => ({
+      ...prevItemPedido,
       [name]: value
     }));
   };
 
-  const handleLimpaEntrega = () => {
-    onLimpaEntrega();
+  const handleLimpaItemPedido = () => {
+    onLimpaItemPedido();
   }
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (entregaInicial) {
-      onEditEntrega(entrega);
+    if (itemPedidoInicial) {
+      onEditItemPedido(itemPedido);
     } else {
-      onAddEntrega(entrega);
+      onAddItemPedido(itemPedido);
     }
-    setEntrega({
+    setItemPedido({
     idCliente: 0,
     idEntrega: null,
     nf: '',
@@ -54,21 +54,21 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
     status: '',
     valor:'',
     peso:'',
-    dataEntrega: ''
+    dataItemPedido: ''
     });
   };
 
   return (
     <div>
 
-      <div className="modal fade" id="entregaModal" tabIndex="-1" aria-labelledby="entregaModalLabel" aria-hidden="true">
+      <div className="modal fade" id="itemPedidoModal" tabIndex="-1" aria-labelledby="itemPedidoModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="entregaModalLabel">
-              {entregaInicial ? 'Editar Entrega' : 'Adicionar Entrega'}
+              <h5 className="modal-title" id="itemPedidoModalLabel">
+              {itemPedidoInicial ? 'Editar ItemPedido' : 'Adicionar ItemPedido'}
               </h5>
-              <button type="button" onClick={handleLimpaEntrega} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" onClick={handleLimpaItemPedido} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
               <form onSubmit={handleSubmit}>
@@ -78,9 +78,9 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
                     className='form-select'
                     id='idCliente'
                     name='idCliente'
-                    value={entrega.idCliente}
-                    onChange={(event) => {setEntrega(prevEntrega => ({
-                      ...prevEntrega,
+                    value={itemPedido.idCliente}
+                    onChange={(event) => {setItemPedido(prevItemPedido => ({
+                      ...prevItemPedido,
                       [event.target.name]: event.target.value}))}}
                   >                   
                     {clientes.map((cliente) => (
@@ -95,9 +95,9 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
                     type="text"
                     className="form-control"
                     id="nf"
-                    value={entrega.nf}
+                    value={itemPedido.nf}
                     onChange={handleChange}
-                    placeholder="nf do entrega"
+                    placeholder="nf do itemPedido"
                   />
                 </div>
                 <div className="mb-3">
@@ -106,9 +106,9 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
                     className='form-select'
                     id='entrega_ou_servico'
                     name='entrega_ou_servico'
-                    value={entrega.entrega_ou_servico}
-                    onChange={(event) => {setEntrega(prevEntrega => ({
-                      ...prevEntrega,
+                    value={itemPedido.entrega_ou_servico}
+                    onChange={(event) => {setItemPedido(prevItemPedido => ({
+                      ...prevItemPedido,
                       [event.target.name]: event.target.value}))}}
                   >                   
                     <option value="Entrega"> Entrega </option>
@@ -121,9 +121,9 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
                     className='form-select'
                     id='status'
                     name='status'
-                    value={entrega.status}
-                    onChange={(event) => {setEntrega(prevEntrega => ({
-                      ...prevEntrega,
+                    value={itemPedido.status}
+                    onChange={(event) => {setItemPedido(prevItemPedido => ({
+                      ...prevItemPedido,
                       [event.target.name]: event.target.value}))}}
                   >                   
                     <option value="Pendente"> Pendente </option>
@@ -142,9 +142,9 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
                     type="number"
                     className="form-control"
                     id="valor"
-                    value={entrega.valor}
+                    value={itemPedido.valor}
                     onChange={handleChange}
-                    placeholder="valor do entrega"
+                    placeholder="valor do itemPedido"
                   />
                 </div>
                 <div className="mb-3">
@@ -154,25 +154,25 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
                     type="number"
                     className="form-control"
                     id="peso"
-                    value={entrega.peso}
+                    value={itemPedido.peso}
                     onChange={handleChange}
-                    placeholder="peso do entrega"
+                    placeholder="peso do itemPedido"
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="dataEntrega" className="form-label">dataEntrega</label>
+                  <label htmlFor="dataItemPedido" className="form-label">dataItemPedido</label>
                   <input
-                    name='dataEntrega'
+                    name='dataItemPedido'
                     type="date"
                     className="form-control"
-                    id="dataEntrega"
-                    value={entrega.dataEntrega.substring(0,10)}
+                    id="dataItemPedido"
+                    value={itemPedido.dataItemPedido.substring(0,10)}
                     onChange={handleChange}
-                    placeholder="data do entrega"
+                    placeholder="data do itemPedido"
                   />
                 </div>
                 <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">
-                  {entregaInicial ? 'Editar Entrega' : 'Adicionar Entrega'}
+                  {itemPedidoInicial ? 'Editar ItemPedido' : 'Adicionar ItemPedido'}
                 </button>
               </form>
             </div>
@@ -183,4 +183,4 @@ const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntre
   );
 };
 
-export default EntregaForm;
+export default ItemPedidoForm;

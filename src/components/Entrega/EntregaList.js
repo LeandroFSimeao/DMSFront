@@ -1,110 +1,110 @@
 import React, { useEffect, useState } from 'react';
-import PedidoItem from './PedidoItem';
+import EntregaItem from './EntregaItem';
 import { Col, Container, Row, Table } from 'reactstrap';
-import PedidoForm from './PedidoForm';
+import EntregaForm from './EntregaForm';
 import { CSVLink } from "react-csv"
 import { useNavigate } from 'react-router-dom';
 
-const PedidoList = () => {
-  const [pedidos, setPedidos] = useState([]);
+const EntregaList = () => {
+  const [entregas, setEntregas] = useState([]);
   const [clientes, setClientes] = useState([]);
-  const [selectedPedido, setSelectedPedido] = useState(null);
+  const [selectedEntrega, setSelectedEntrega] = useState(null);
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetchPedidos();
+    fetchEntregas();
     fetchClientes();
   }, []);
 
-  const fetchPedidos = () => {
-    fetch('http://localhost:5233/Pedido')
+  const fetchEntregas = () => {
+    fetch('http://localhost:5233/Entrega')
       .then(response => response.json())
-      .then(data => setPedidos(data));
+      .then(data => setEntregas(data));
   };
 
   const fetchClientes = () => {
-    fetch('http://localhost:5233/Pedido')
+    fetch('http://localhost:5233/Entrega')
       .then(response => response.json())
       .then(data => setClientes(data));
   };
 
-  const handleSelectCLiente = pedido => {
-    setSelectedPedido(pedido);
+  const handleSelectCLiente = entrega => {
+    setSelectedEntrega(entrega);
   };
 
-  const handleLimpaSelectedPedido = () => {
-    setSelectedPedido(null);
+  const handleLimpaSelectedEntrega = () => {
+    setSelectedEntrega(null);
   }
 
   const goHome = () => {
     navigate("/")
   }
 
-  const handleAddPedido = pedido => {
-    fetch('http://localhost:5233/Pedido', {
+  const handleAddEntrega = entrega => {
+    fetch('http://localhost:5233/Entrega', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(pedido),
+      body: JSON.stringify(entrega),
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Novo pedido adicionado:', data);
-        fetchPedidos(); // Buscar novamente a lista de pedidos após a adição
-        setSelectedPedido(null);
+        console.log('Novo entrega adicionado:', data);
+        fetchEntregas(); // Buscar novamente a lista de entregas após a adição
+        setSelectedEntrega(null);
       });
   };
 
-  const handleEditPedido = pedido => {
-    fetch('http://localhost:5233/Pedido', {
+  const handleEditEntrega = entrega => {
+    fetch('http://localhost:5233/Entrega', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(pedido),
+      body: JSON.stringify(entrega),
     })
       .then(response => {
         if (response.status === 204) {
-          console.log('Pedido editado com sucesso.');
-          fetchPedidos(); // Buscar novamente a lista de pedidos após a remoção
-          setSelectedPedido(null);
+          console.log('Entrega editado com sucesso.');
+          fetchEntregas(); // Buscar novamente a lista de entregas após a remoção
+          setSelectedEntrega(null);
         } else {
-          console.log('Erro ao editar o pedido.');
+          console.log('Erro ao editar o entrega.');
         }
       })
       .catch(error => {
-        console.log('Erro ao editar o pedido:', error);
+        console.log('Erro ao editar o entrega:', error);
       });
   };
 
-  const handleDeletePedido = idPedido => {
-    fetch(`http://localhost:5233/Pedido/${idPedido}`, {
+  const handleDeleteEntrega = idEntrega => {
+    fetch(`http://localhost:5233/Entrega/${idEntrega}`, {
       method: 'DELETE',
     })
       .then(response => {
         if (response.status === 204) {
-          console.log('Pedido removido com sucesso.');
-          fetchPedidos(); // Buscar novamente a lista de pedidos após a remoção
+          console.log('Entrega removido com sucesso.');
+          fetchEntregas(); // Buscar novamente a lista de entregas após a remoção
         } else {
-          console.log('Erro ao remover o pedido.');
+          console.log('Erro ao remover o entrega.');
         }
       })
       .catch(error => {
-        console.log('Erro ao remover o pedido:', error);
+        console.log('Erro ao remover o entrega:', error);
       });
   };
 
-  const handleGeocodificaPedido = idPedido => {
-    // Fazer a requisição PATCH para a API para Geocodificar o Pedido
-    fetch(`http://localhost:5233/Pedido/Geocodifica/${idPedido}`, {
+  const handleGeocodificaEntrega = idEntrega => {
+    // Fazer a requisição PATCH para a API para Geocodificar o Entrega
+    fetch(`http://localhost:5233/Entrega/Geocodifica/${idEntrega}`, {
       method: 'PATCH',
     })
       .then(response => response.json())
       .then(data => {
-        console.log('Pedido geocodificado:', data);
-        // Atualizar a lista de pedidos
-        fetchPedidos(); // Buscar novamente a lista de pedidos após a remoção
+        console.log('Entrega geocodificado:', data);
+        // Atualizar a lista de entregas
+        fetchEntregas(); // Buscar novamente a lista de entregas após a remoção
       });
   };
 
@@ -114,7 +114,7 @@ const PedidoList = () => {
         <Container className='App'>
           <Row>
             <Col>
-              <h1 style={{ margin: "20px 0" }}>Pedidos</h1>
+              <h1 style={{ margin: "20px 0" }}>Entregas</h1>
             </Col>
           </Row>
           <Row>
@@ -130,18 +130,18 @@ const PedidoList = () => {
                     <th scope='col'>Status</th>
                     <th scope='col'>valor</th>
                     <th scope='col'>Peso</th>
-                    <th scope='col'>DataPedido</th>
+                    <th scope='col'>DataEntrega</th>
                     <th scope='col'> </th>
                     <th scope='col'> </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {pedidos.map(pedido => (
-                    <PedidoItem
-                      key={pedido.idPedido}
-                      pedido={pedido}
-                      onDelete={handleDeletePedido}
-                      onPatch={handleGeocodificaPedido}
+                  {entregas.map(entrega => (
+                    <EntregaItem
+                      key={entrega.idEntrega}
+                      entrega={entrega}
+                      onDelete={handleDeleteEntrega}
+                      onPatch={handleGeocodificaEntrega}
                       onEdit={handleSelectCLiente}
                     />
                   ))}
@@ -152,17 +152,17 @@ const PedidoList = () => {
                 color="primary"
                 style={{ float: "left", marginRight: "10px" }}
                 className="btn btn-primary"
-                data={pedidos}>
+                data={entregas}>
                 Download CSV
               </CSVLink>
-              <PedidoForm
-                onAddPedido={handleAddPedido}
-                onEditPedido={handleEditPedido}
-                pedidoInicial={selectedPedido}
-                onLimpaPedido={handleLimpaSelectedPedido}
+              <EntregaForm
+                onAddEntrega={handleAddEntrega}
+                onEditEntrega={handleEditEntrega}
+                entregaInicial={selectedEntrega}
+                onLimpaEntrega={handleLimpaSelectedEntrega}
                 clientesprop = {clientes}
               />
-              <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pedidoModal">
+              <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#entregaModal">
                 Adicionar
               </button>
               {'  '}
@@ -177,4 +177,4 @@ const PedidoList = () => {
   );
 };
 
-export default PedidoList;
+export default EntregaList;

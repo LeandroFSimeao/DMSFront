@@ -11,10 +11,6 @@ const PedidoItem = ({ pedido, onDelete, onPatch, onEdit }) => {
     onDelete(pedido.idPedido);
   };
 
-  const handleGeocodifica = () => {
-    onPatch(pedido.idPedido);
-  };
-
   return (
     <>
       <tr key={pedido.IdPedido}>
