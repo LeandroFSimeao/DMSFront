@@ -1,9 +1,8 @@
 import React from 'react';
 import ClienteList from './components/Cliente/ClienteList';
-import { Col, Container, Row } from 'reactstrap';
-import Navigation from './components/Navigation';
 import { Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
+import PedidoList from './components/Pedido/PedidoList';
 
 const App = () => {
   return (

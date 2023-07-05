@@ -10,11 +10,11 @@ const Home = () =>{
             Clientes
           </Link>
         </li>
-        {/* <li className="nav-item">
-          <Link to="/produtos" className="nav-link">
+        <li className="nav-item">
+          <Link to="/pedido" className="nav-link">
             Pedidos
           </Link>
-        </li> */}
+        </li>
         {/* Adicione links para outras entidades aqui */}
       </ul>
     </nav>
