@@ -15,6 +15,11 @@ const Navigation = () => {
               Pedidos
             </Link>
           </li>
+          <li className="nav-item">
+            <Link to="/pedidoItem" className="nav-link">
+              Itens dos pedidos
+            </Link>
+          </li>
           {/* Adicione links para outras entidades aqui */}
         </ul>
       </nav>

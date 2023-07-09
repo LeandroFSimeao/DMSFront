@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 
-const PedidoItem = ({ pedido, onDelete, onPatch, onEdit }) => {
+const PedidoItem = ({ pedido, onDelete, onEdit }) => {
 
   const handleSetPedidoSelecionado = () => {
     onEdit(pedido);

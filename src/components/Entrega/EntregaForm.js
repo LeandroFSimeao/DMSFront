@@ -1,178 +1,89 @@
 import React, { useEffect, useState } from 'react';
 
-const PedidoForm = ({ onAddPedido, onEditPedido, pedidoInicial, onLimpaPedido }) => {
-  const [pedido, setPedido] = useState({
-    idCliente: 0,
-    idEntrega: null,
-    nf: '',
-    entrega_ou_servico: '',
-    status: '',
-    valor:'',
-    peso:'',
-    dataPedido: ''
+const EntregaForm = ({ onAddEntrega, onEditEntrega, entregaInicial, onLimpaEntrega }) => {
+  const [entrega, setEntrega] = useState({
+    motorista: '',
+    veiculo: '',
+    polyline: '',
+    duracao: 0,
+    distancia: 0,
   });
-  const [clientes, setClientes] = useState([]);
 
   useEffect(() => {
-    if(pedidoInicial){
-      setPedido(pedidoInicial);
-      console.log(pedidoInicial)
+    if(entregaInicial){
+      setEntrega(entregaInicial);
+      console.log(entregaInicial)
     }
-  }, [pedidoInicial]);
-
-  useEffect(() => {
-    fetch('http://localhost:5233/Cliente')
-      .then(response => response.json())
-      .then(data => setClientes(data))
-      .catch(error => console.log(error));
-  }, []);
+  }, [entregaInicial]);
 
   const handleChange = event => {
     const { name, value } = event.target;
-    setPedido(prevPedido => ({
-      ...prevPedido,
+    setEntrega(prevEntrega => ({
+      ...prevEntrega,
       [name]: value
     }));
   };
 
-  const handleLimpaPedido = () => {
-    onLimpaPedido();
+  const handleLimpaEntrega = () => {
+    onLimpaEntrega();
   }
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (pedidoInicial) {
-      onEditPedido(pedido);
+    if (entregaInicial) {
+      onEditEntrega(entrega);
     } else {
-      onAddPedido(pedido);
+      onAddEntrega(entrega);
     }
-    setPedido({
-    idCliente: 0,
-    idEntrega: null,
-    nf: '',
-    entrega_ou_servico: '',
-    status: '',
-    valor:'',
-    peso:'',
-    dataPedido: ''
+    setEntrega({
+      motorista: '',
+      veiculo: '',
+      polyline: '',
+      duracao: 0,
+      distancia: 0,
     });
   };
 
   return (
     <div>
 
-      <div className="modal fade" id="pedidoModal" tabIndex="-1" aria-labelledby="pedidoModalLabel" aria-hidden="true">
+      <div className="modal fade" id="entregaModal" tabIndex="-1" aria-labelledby="entregaModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="pedidoModalLabel">
-              {pedidoInicial ? 'Editar Pedido' : 'Adicionar Pedido'}
+              <h5 className="modal-title" id="entregaModalLabel">
+              {entregaInicial ? 'Editar Entrega' : 'Adicionar Entrega'}
               </h5>
-              <button type="button" onClick={handleLimpaPedido} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" onClick={handleLimpaEntrega} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit}>                
                 <div className="mb-3">
-                  <label htmlFor="idCliente" className="form-label">IdCliente</label>
-                  <select 
-                    className='form-select'
-                    id='idCliente'
-                    name='idCliente'
-                    value={pedido.idCliente}
-                    onChange={(event) => {setPedido(prevPedido => ({
-                      ...prevPedido,
-                      [event.target.name]: event.target.value}))}}
-                  >                   
-                    {clientes.map((cliente) => (
-                      <option key={cliente.idCliente} value={cliente.idCliente}> {cliente.nome} </option>
-                    ))}
-                  </select>             
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="nf" className="form-label">NF</label>
+                  <label htmlFor="motorista" className="form-label">motorista</label>
                   <input
-                    name='nf'
+                    name='motorista'
                     type="text"
                     className="form-control"
-                    id="nf"
-                    value={pedido.nf}
+                    id="motorista"
+                    value={entrega.motorista}
                     onChange={handleChange}
-                    placeholder="nf do pedido"
+                    placeholder="motorista da entrega"
                   />
-                </div>
+                </div>                
                 <div className="mb-3">
-                  <label htmlFor="entrega_ou_servico" className="form-label">Entrega ou serviço</label>
-                  <select 
-                    className='form-select'
-                    id='entrega_ou_servico'
-                    name='entrega_ou_servico'
-                    value={pedido.entrega_ou_servico}
-                    onChange={(event) => {setPedido(prevPedido => ({
-                      ...prevPedido,
-                      [event.target.name]: event.target.value}))}}
-                  >                   
-                    <option value="Entrega"> Entrega </option>
-                    <option value="Servico"> Servico </option>
-                  </select>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="status" className="form-label">status</label>
-                  <select 
-                    className='form-select'
-                    id='status'
-                    name='status'
-                    value={pedido.status}
-                    onChange={(event) => {setPedido(prevPedido => ({
-                      ...prevPedido,
-                      [event.target.name]: event.target.value}))}}
-                  >                   
-                    <option value="Pendente"> Pendente </option>
-                    <option value="Em processamento"> Em processamento </option>
-                    <option value="pago"> Pago </option>
-                    <option value="Enviado"> Enviado </option>
-                    <option value="Entregue"> Entregue </option>
-                    <option value="Cancelado"> Cancelado </option>
-                    <option value="Devolvido"> Devolvido </option>
-                  </select>                 
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="valor" className="form-label">valor</label>
+                  <label htmlFor="veiculo" className="form-label">veiculo</label>
                   <input
-                    name='valor'
-                    type="number"
+                    name='veiculo'
+                    type="text"
                     className="form-control"
-                    id="valor"
-                    value={pedido.valor}
+                    id="veiculo"
+                    value={entrega.veiculo}
                     onChange={handleChange}
-                    placeholder="valor do pedido"
+                    placeholder="veiculo da entrega"
                   />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="peso" className="form-label">peso</label>
-                  <input
-                    name='peso'
-                    type="number"
-                    className="form-control"
-                    id="peso"
-                    value={pedido.peso}
-                    onChange={handleChange}
-                    placeholder="peso do pedido"
-                  />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="dataPedido" className="form-label">dataPedido</label>
-                  <input
-                    name='dataPedido'
-                    type="date"
-                    className="form-control"
-                    id="dataPedido"
-                    value={pedido.dataPedido.substring(0,10)}
-                    onChange={handleChange}
-                    placeholder="data do pedido"
-                  />
-                </div>
+                </div>                
                 <button type="submit" data-bs-dismiss="modal" className="btn btn-primary">
-                  {pedidoInicial ? 'Editar Pedido' : 'Adicionar Pedido'}
+                  {entregaInicial ? 'Editar Entrega' : 'Adicionar Entrega'}
                 </button>
               </form>
             </div>
@@ -183,4 +94,4 @@ const PedidoForm = ({ onAddPedido, onEditPedido, pedidoInicial, onLimpaPedido })
   );
 };
 
-export default PedidoForm;
+export default EntregaForm;

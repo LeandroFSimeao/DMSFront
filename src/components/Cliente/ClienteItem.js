@@ -12,7 +12,7 @@ const handleSetClienteSelecionado = () => {
   };
 
   const handleGeocodifica = () => {
-    onPatch(cliente.idCliente);
+    onPatch(cliente);
   };
 
   return (

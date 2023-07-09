@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import EntregaItem from './EntregaItem';
-import { Col, Container, Row, Table } from 'reactstrap';
+import { Button, Col, Container, Row, Table } from 'reactstrap';
 import EntregaForm from './EntregaForm';
 import { CSVLink } from "react-csv"
 import { useNavigate } from 'react-router-dom';
+import MapRota from '../MapRota';
 
 const EntregaList = () => {
   const [entregas, setEntregas] = useState([]);
-  const [clientes, setClientes] = useState([]);
   const [selectedEntrega, setSelectedEntrega] = useState(null);
+  const [showMap, setShowMap] = useState(false);
   const navigate = useNavigate()
 
   useEffect(() => {
     fetchEntregas();
-    fetchClientes();
   }, []);
 
   const fetchEntregas = () => {
@@ -22,14 +22,13 @@ const EntregaList = () => {
       .then(data => setEntregas(data));
   };
 
-  const fetchClientes = () => {
-    fetch('http://localhost:5233/Entrega')
-      .then(response => response.json())
-      .then(data => setClientes(data));
+  const handleSelectEntrega = entrega => {
+    setSelectedEntrega(entrega);
   };
 
-  const handleSelectCLiente = entrega => {
-    setSelectedEntrega(entrega);
+  const handleClickMap = () => {
+    setSelectedEntrega()
+    setShowMap(true);
   };
 
   const handleLimpaSelectedEntrega = () => {
@@ -95,19 +94,6 @@ const EntregaList = () => {
       });
   };
 
-  const handleGeocodificaEntrega = idEntrega => {
-    // Fazer a requisição PATCH para a API para Geocodificar o Entrega
-    fetch(`http://localhost:5233/Entrega/Geocodifica/${idEntrega}`, {
-      method: 'PATCH',
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Entrega geocodificado:', data);
-        // Atualizar a lista de entregas
-        fetchEntregas(); // Buscar novamente a lista de entregas após a remoção
-      });
-  };
-
   return (
     <>
       <div>
@@ -123,14 +109,10 @@ const EntregaList = () => {
                 <thead>
                   <tr>
                     <th scope='col'>ID</th>
-                    <th scope='col'>IdCliente</th>
-                    <th scope='col'>IdEntrega</th>
-                    <th scope='col'>Nf</th>
-                    <th scope='col'>Entrega ou serviço</th>
-                    <th scope='col'>Status</th>
-                    <th scope='col'>valor</th>
-                    <th scope='col'>Peso</th>
-                    <th scope='col'>DataEntrega</th>
+                    <th scope='col'>Motorista</th>
+                    <th scope='col'>Veiculo</th>
+                    <th scope='col'>Duração</th>
+                    <th scope='col'>Distância</th>
                     <th scope='col'> </th>
                     <th scope='col'> </th>
                   </tr>
@@ -141,8 +123,7 @@ const EntregaList = () => {
                       key={entrega.idEntrega}
                       entrega={entrega}
                       onDelete={handleDeleteEntrega}
-                      onPatch={handleGeocodificaEntrega}
-                      onEdit={handleSelectCLiente}
+                      onEdit={handleSelectEntrega}
                     />
                   ))}
                 </tbody>
@@ -160,7 +141,6 @@ const EntregaList = () => {
                 onEditEntrega={handleEditEntrega}
                 entregaInicial={selectedEntrega}
                 onLimpaEntrega={handleLimpaSelectedEntrega}
-                clientesprop = {clientes}
               />
               <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#entregaModal">
                 Adicionar
@@ -169,6 +149,13 @@ const EntregaList = () => {
               <button type="button" className='btn btn-secondary' onClick={goHome}>
                 Voltar para Home
               </button>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+                    {showMap ? ( 
+                    <MapRota />
+                    ) : (<Button onClick={handleClickMap}> Abrir Mapa </Button>)}
             </Col>
           </Row>
         </Container>

@@ -4,10 +4,12 @@ import { Col, Container, Row, Table } from 'reactstrap';
 import ClienteForm from './ClienteForm';
 import { CSVLink } from "react-csv"
 import { useNavigate } from 'react-router-dom';
+import MapContainer from '../MapContainer';
 
 const ClienteList = () => {
   const [clientes, setClientes] = useState([]);
   const [selectedClient, setSelectedClient] = useState(null);
+  const [showMap, setShowMap] = useState(false);
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -22,6 +24,10 @@ const ClienteList = () => {
 
   const handleSelectCLiente = cliente => {
     setSelectedClient(cliente);
+  };
+
+  const handleClickMap = () => {
+    setShowMap(true);
   };
 
   const handleLimpaSelectedCliente = () => {
@@ -87,17 +93,20 @@ const ClienteList = () => {
       });
   };
 
-  const handleGeocodificaCliente = idCliente => {
+  const handleGeocodificaCliente = cliente => {
     // Fazer a requisição PATCH para a API para Geocodificar o Cliente
-    fetch(`http://localhost:5233/Cliente/Geocodifica/${idCliente}`, {
+    fetch(`http://localhost:5233/Cliente/Geocodifica/${cliente.idCliente}`, {
       method: 'PATCH',
     })
       .then(response => response.json())
       .then(data => {
         console.log('Cliente geocodificado:', data);
         // Atualizar a lista de clientes
-        fetchClientes(); // Buscar novamente a lista de clientes após a remoção
+        fetchClientes();
+        setSelectedClient(data);
+        handleClickMap(); // Buscar novamente a lista de clientes após a remoção
       });
+      
   };
 
   return (
@@ -159,6 +168,13 @@ const ClienteList = () => {
               <button type="button" className='btn btn-secondary' onClick={goHome}>
                 Voltar para Home
               </button>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+                    {showMap ? ( 
+                    <MapContainer latitude={selectedClient.latitude} longitude={selectedClient.longitude} />
+                    ) : ('')}
             </Col>
           </Row>
         </Container>

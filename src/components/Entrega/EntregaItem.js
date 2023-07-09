@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 
-const EntregaItem = ({ entrega, onDelete, onPatch, onEdit }) => {
+const EntregaItem = ({ entrega, onDelete, onEdit }) => {
 
   const handleSetEntregaSelecionado = () => {
     onEdit(entrega);
@@ -15,19 +15,15 @@ const EntregaItem = ({ entrega, onDelete, onPatch, onEdit }) => {
     <>
       <tr key={entrega.IdEntrega}>
         <><th scope="row">{entrega.idEntrega}</th>
-          <td>{entrega.idCliente}</td>
-          <td>{entrega.idEntrega}</td>
-          <td>{entrega.nf}</td>
-          <td>{entrega.entrega_ou_servico}</td>
-          <td>{entrega.status}</td>
-          <td>{entrega.valor}</td>
-          <td>{entrega.peso}</td>
-          <td>{entrega.dataEntrega.substring(0,10)}</td>
+          <td>{entrega.motorista}</td>
+          <td>{entrega.veiculo}</td>
+          <td>{entrega.duracao}</td>
+          <td>{entrega.distancia}</td>
           <td>
             <div style={{ width: "110px" }}>
               {' '}
               <button type="button" onClick={handleSetEntregaSelecionado} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#entregaModal">
-                Editar
+                Abrir Rota
               </button>
             </div>
           </td>

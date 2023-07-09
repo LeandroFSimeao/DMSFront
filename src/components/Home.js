@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Home = () =>{
+const Home = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <ul className="navbar-nav">
@@ -15,7 +15,16 @@ const Home = () =>{
             Pedidos
           </Link>
         </li>
-        {/* Adicione links para outras entidades aqui */}
+        <li className="nav-item">
+          <Link to="/itemPedido" className="nav-link">
+            Itens dos pedidos
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/entregas" className="nav-link">
+            Entregas
+          </Link>
+        </li>
       </ul>
     </nav>
   );

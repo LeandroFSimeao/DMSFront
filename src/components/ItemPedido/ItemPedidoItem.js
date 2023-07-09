@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 
-const ItemPedidoItem = ({ itemPedido, onDelete, onPatch, onEdit }) => {
+const ItemPedidoItem = ({ itemPedido, onDelete, onEdit }) => {
 
   const handleSetItemPedidoSelecionado = () => {
     onEdit(itemPedido);
@@ -15,14 +15,10 @@ const ItemPedidoItem = ({ itemPedido, onDelete, onPatch, onEdit }) => {
     <>
       <tr key={itemPedido.IdItemPedido}>
         <><th scope="row">{itemPedido.idItemPedido}</th>
-          <td>{itemPedido.idCliente}</td>
-          <td>{itemPedido.idEntrega}</td>
-          <td>{itemPedido.nf}</td>
-          <td>{itemPedido.entrega_ou_servico}</td>
-          <td>{itemPedido.status}</td>
-          <td>{itemPedido.valor}</td>
+          <td>{itemPedido.idPedido}</td>
+          <td>{itemPedido.descricao}</td>
           <td>{itemPedido.peso}</td>
-          <td>{itemPedido.dataItemPedido.substring(0,10)}</td>
+          <td>{itemPedido.valor}</td>
           <td>
             <div style={{ width: "110px" }}>
               {' '}

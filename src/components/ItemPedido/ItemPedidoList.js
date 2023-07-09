@@ -123,14 +123,10 @@ const ItemPedidoList = () => {
                 <thead>
                   <tr>
                     <th scope='col'>ID</th>
-                    <th scope='col'>IdCliente</th>
-                    <th scope='col'>IdEntrega</th>
-                    <th scope='col'>Nf</th>
-                    <th scope='col'>Entrega ou serviço</th>
-                    <th scope='col'>Status</th>
-                    <th scope='col'>valor</th>
+                    <th scope='col'>IdPedido</th>
+                    <th scope='col'>Descricao</th>
                     <th scope='col'>Peso</th>
-                    <th scope='col'>DataItemPedido</th>
+                    <th scope='col'>Valor</th>
                     <th scope='col'> </th>
                     <th scope='col'> </th>
                   </tr>
