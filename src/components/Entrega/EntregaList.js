@@ -17,7 +17,7 @@ const EntregaList = () => {
   }, []);
 
   const fetchEntregas = () => {
-    fetch('http://localhost:5233/Entrega')
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Entrega')
       .then(response => response.json())
       .then(data => setEntregas(data));
   };
@@ -40,7 +40,7 @@ const EntregaList = () => {
   }
 
   const handleAddEntrega = entrega => {
-    fetch('http://localhost:5233/Entrega', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Entrega', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const EntregaList = () => {
   };
 
   const handleEditEntrega = entrega => {
-    fetch('http://localhost:5233/Entrega', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Entrega', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ const EntregaList = () => {
   };
 
   const handleDeleteEntrega = idEntrega => {
-    fetch(`http://localhost:5233/Entrega/${idEntrega}`, {
+    fetch(`http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Entrega/${idEntrega}`, {
       method: 'DELETE',
     })
       .then(response => {

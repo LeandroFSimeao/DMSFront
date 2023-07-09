@@ -17,7 +17,7 @@ const ClienteList = () => {
   }, []);
 
   const fetchClientes = () => {
-    fetch('http://localhost:5233/Cliente')
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Cliente')
       .then(response => response.json())
       .then(data => setClientes(data));
   };
@@ -39,7 +39,7 @@ const ClienteList = () => {
   }
 
   const handleAddCliente = cliente => {
-    fetch('http://localhost:5233/Cliente', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Cliente', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const ClienteList = () => {
   };
 
   const handleEditCliente = cliente => {
-    fetch('http://localhost:5233/Cliente', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Cliente', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ const ClienteList = () => {
   };
 
   const handleDeleteCliente = idCliente => {
-    fetch(`http://localhost:5233/Cliente/${idCliente}`, {
+    fetch(`http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Cliente/${idCliente}`, {
       method: 'DELETE',
     })
       .then(response => {
@@ -95,7 +95,7 @@ const ClienteList = () => {
 
   const handleGeocodificaCliente = cliente => {
     // Fazer a requisição PATCH para a API para Geocodificar o Cliente
-    fetch(`http://localhost:5233/Cliente/Geocodifica/${cliente.idCliente}`, {
+    fetch(`http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Cliente/Geocodifica/${cliente.idCliente}`, {
       method: 'PATCH',
     })
       .then(response => response.json())

@@ -17,13 +17,13 @@ const ItemPedidoList = () => {
   }, []);
 
   const fetchItemPedidos = () => {
-    fetch('http://localhost:5233/ItemPedido')
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/ItemPedido')
       .then(response => response.json())
       .then(data => setItemPedidos(data));
   };
 
   const fetchClientes = () => {
-    fetch('http://localhost:5233/ItemPedido')
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/ItemPedido')
       .then(response => response.json())
       .then(data => setClientes(data));
   };
@@ -41,7 +41,7 @@ const ItemPedidoList = () => {
   }
 
   const handleAddItemPedido = itemPedido => {
-    fetch('http://localhost:5233/ItemPedido', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/ItemPedido', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +57,7 @@ const ItemPedidoList = () => {
   };
 
   const handleEditItemPedido = itemPedido => {
-    fetch('http://localhost:5233/ItemPedido', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/ItemPedido', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const ItemPedidoList = () => {
   };
 
   const handleDeleteItemPedido = idItemPedido => {
-    fetch(`http://localhost:5233/ItemPedido/${idItemPedido}`, {
+    fetch(`http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/ItemPedido/${idItemPedido}`, {
       method: 'DELETE',
     })
       .then(response => {
@@ -97,7 +97,7 @@ const ItemPedidoList = () => {
 
   const handleGeocodificaItemPedido = idItemPedido => {
     // Fazer a requisição PATCH para a API para Geocodificar o ItemPedido
-    fetch(`http://localhost:5233/ItemPedido/Geocodifica/${idItemPedido}`, {
+    fetch(`http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/ItemPedido/Geocodifica/${idItemPedido}`, {
       method: 'PATCH',
     })
       .then(response => response.json())

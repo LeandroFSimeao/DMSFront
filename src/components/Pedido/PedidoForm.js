@@ -21,7 +21,7 @@ const PedidoForm = ({ onAddPedido, onEditPedido, pedidoInicial, onLimpaPedido })
   }, [pedidoInicial]);
 
   useEffect(() => {
-    fetch('http://localhost:5233/Cliente')
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Cliente')
       .then(response => response.json())
       .then(data => setClientes(data))
       .catch(error => console.log(error));

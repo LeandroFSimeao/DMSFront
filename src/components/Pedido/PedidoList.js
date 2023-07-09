@@ -20,13 +20,13 @@ const PedidoList = () => {
   }, []);
 
   const fetchPedidos = () => {
-    fetch('http://localhost:5233/Pedido')
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Pedido')
       .then(response => response.json())
       .then(data => setPedidos(data));
   };
 
   const fetchClientes = () => {
-    fetch('http://localhost:5233/Pedido')
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Pedido')
       .then(response => response.json())
       .then(data => setClientes(data));
   };
@@ -48,7 +48,7 @@ const PedidoList = () => {
   }
 
   const handleAddPedido = pedido => {
-    fetch('http://localhost:5233/Pedido', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Pedido', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const PedidoList = () => {
 
   const handleAddEntrega = pedidos => {
     console.log(pedidos);
-    fetch('http://localhost:5233/Entrega/GerarEntregaOtimizada', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Entrega/GerarEntregaOtimizada', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const PedidoList = () => {
   }
 
   const handleAddItemPedido = itemPedido => {
-    fetch('http://localhost:5233/ItemPedido', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/ItemPedido', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ const PedidoList = () => {
   };
 
   const handleEditPedido = pedido => {
-    fetch('http://localhost:5233/Pedido', {
+    fetch('http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Pedido', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ const PedidoList = () => {
   };
 
   const handleDeletePedido = idPedido => {
-    fetch(`http://localhost:5233/Pedido/${idPedido}`, {
+    fetch(`http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Pedido/${idPedido}`, {
       method: 'DELETE',
     })
       .then(response => {
@@ -140,7 +140,7 @@ const PedidoList = () => {
 
   const handleGeocodificaPedido = idPedido => {
     // Fazer a requisição PATCH para a API para Geocodificar o Pedido
-    fetch(`http://localhost:5233/Pedido/Geocodifica/${idPedido}`, {
+    fetch(`http://dmsback-env.eba-dsmce2qe.us-east-1.elasticbeanstalk.com/Pedido/Geocodifica/${idPedido}`, {
       method: 'PATCH',
     })
       .then(response => response.json())
