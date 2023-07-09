@@ -9,7 +9,7 @@ const PedidoForm = ({ onAddPedido, onEditPedido, pedidoInicial, onLimpaPedido })
     status: '',
     valor:'',
     peso:'',
-    DataPedido: '01-01-1990'
+    dataPedido: '01-01-1990'
   });
   const [clientes, setClientes] = useState([]);
 

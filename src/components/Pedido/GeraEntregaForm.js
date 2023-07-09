@@ -11,7 +11,7 @@ const GeraEntregaForm = ({ onAddEntrega, pedidos }) => {
     status: '',
     valor:'',
     peso:'',
-    DataPedido: '01-01-1990'
+    dataPedido: '01-01-1990'
   });
 
   const handleSubmit = event => {
