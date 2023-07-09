@@ -1,10 +1,14 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 
-const PedidoItem = ({ pedido, onDelete, onEdit }) => {
+const PedidoItem = ({ pedido, onDelete, onEdit, onAddItem }) => {
 
   const handleSetPedidoSelecionado = () => {
     onEdit(pedido);
+  }
+
+  const handelAddItem = () => {
+    onAddItem(pedido.idPedido);
   }
 
   const handleDelete = () => {
@@ -28,6 +32,14 @@ const PedidoItem = ({ pedido, onDelete, onEdit }) => {
               {' '}
               <button type="button" onClick={handleSetPedidoSelecionado} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pedidoModal">
                 Editar
+              </button>
+            </div>
+          </td>
+          <td>
+            <div style={{ width: "110px" }}>
+              {' '}
+              <button type="button" onClick={handelAddItem} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#itemPedidoModal">
+                Add item
               </button>
             </div>
           </td>

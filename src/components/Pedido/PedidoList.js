@@ -4,11 +4,14 @@ import { Col, Container, Row, Table } from 'reactstrap';
 import PedidoForm from './PedidoForm';
 import { CSVLink } from "react-csv"
 import { useNavigate } from 'react-router-dom';
+import GeraEntregaForm from './GeraEntregaForm';
+import ItemPedidoForm from '../ItemPedido/ItemPedidoForm';
 
 const PedidoList = () => {
   const [pedidos, setPedidos] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [selectedPedido, setSelectedPedido] = useState(null);
+  const [selectedIdPedido, setSelectedIdPedido] = useState(null);
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -40,6 +43,10 @@ const PedidoList = () => {
     navigate("/")
   }
 
+  const handleAddItem = (idPedido) => {
+    setSelectedIdPedido(idPedido);
+  }
+
   const handleAddPedido = pedido => {
     fetch('http://localhost:5233/Pedido', {
       method: 'POST',
@@ -53,6 +60,42 @@ const PedidoList = () => {
         console.log('Novo pedido adicionado:', data);
         fetchPedidos(); // Buscar novamente a lista de pedidos após a adição
         setSelectedPedido(null);
+      });
+  };
+
+  const handleAddEntrega = pedidos => {
+    console.log(pedidos);
+    fetch('http://localhost:5233/Entrega/GerarEntregaOtimizada', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(pedidos),
+    })
+    .then(response => {
+      if (response.status === 201) {
+        console.log('Entrega criada com sucesso.');
+        fetchPedidos(); // Buscar novamente a lista de pedidos após a remoção
+      } else {
+        console.log('Erro ao criar entrega.');
+      }
+    })
+    .catch(error => {
+      console.log('Erro ao criar entrega:', error);
+    });
+  }
+
+  const handleAddItemPedido = itemPedido => {
+    fetch('http://localhost:5233/ItemPedido', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(itemPedido),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Novo itemPedido adicionado:', data);
       });
   };
 
@@ -143,6 +186,7 @@ const PedidoList = () => {
                       onDelete={handleDeletePedido}
                       onPatch={handleGeocodificaPedido}
                       onEdit={handleSelectCLiente}
+                      onAddItem={handleAddItem}
                     />
                   ))}
                 </tbody>
@@ -162,8 +206,20 @@ const PedidoList = () => {
                 onLimpaPedido={handleLimpaSelectedPedido}
                 clientesprop = {clientes}
               />
+              <ItemPedidoForm
+                onAddItemPedido={handleAddItemPedido}
+                idPedidoInicial={selectedIdPedido}
+              />
+              <GeraEntregaForm
+                onAddEntrega={handleAddEntrega}
+                pedidos = {pedidos}
+              />
               <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#pedidoModal">
                 Adicionar
+              </button>
+              {'  '}
+              <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#geraEntregaModal">
+                Gerar Entrega
               </button>
               {'  '}
               <button type="button" className='btn btn-secondary' onClick={goHome}>

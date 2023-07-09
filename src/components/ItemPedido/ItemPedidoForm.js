@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const ItemPedidoForm = ({ onAddItemPedido, onEditItemPedido, itemPedidoInicial, onLimpaItemPedido }) => {
+const ItemPedidoForm = ({ onAddItemPedido, onEditItemPedido, itemPedidoInicial, onLimpaItemPedido, idPedidoInicial }) => {
   const [itemPedido, setItemPedido] = useState({
     idPedido: 0,
     descricao: null,
@@ -8,6 +8,7 @@ const ItemPedidoForm = ({ onAddItemPedido, onEditItemPedido, itemPedidoInicial, 
     valor: ''
   });
   const [pedidos, setPedidos] = useState([]);
+  const [idPedido, setIdPedido] = useState(null);
 
   useEffect(() => {
     if(itemPedidoInicial){
@@ -15,6 +16,16 @@ const ItemPedidoForm = ({ onAddItemPedido, onEditItemPedido, itemPedidoInicial, 
       console.log(itemPedidoInicial)
     }
   }, [itemPedidoInicial]);
+
+  useEffect(() => {
+    if(idPedidoInicial){
+      setIdPedido(idPedidoInicial);
+      setItemPedido(prevState => {
+        return {...prevState, idPedido: idPedidoInicial}
+      });
+      console.log(idPedidoInicial)
+    }
+  }, [idPedidoInicial]);
 
   useEffect(() => {
     fetch('http://localhost:5233/Pedido')
@@ -32,7 +43,10 @@ const ItemPedidoForm = ({ onAddItemPedido, onEditItemPedido, itemPedidoInicial, 
   };
 
   const handleLimpaItemPedido = () => {
-    onLimpaItemPedido();
+    if (!idPedidoInicial){
+      onLimpaItemPedido();
+
+    }
   }
 
   const handleSubmit = event => {
@@ -66,6 +80,17 @@ const ItemPedidoForm = ({ onAddItemPedido, onEditItemPedido, itemPedidoInicial, 
               <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="idPedido" className="form-label">idPedido</label>
+                  {idPedido ? 
+                  <input
+                    name='idPedido'
+                    type="text"
+                    className="form-control"
+                    id="idPedido"
+                    value={idPedido}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  /> : 
                   <select 
                     className='form-select'
                     id='idPedido'
@@ -78,7 +103,7 @@ const ItemPedidoForm = ({ onAddItemPedido, onEditItemPedido, itemPedidoInicial, 
                     {pedidos.map((pedido) => (
                       <option key={pedido.idPedido} value={pedido.idPedido}> {pedido.idPedido} </option>
                     ))}
-                  </select>             
+                  </select>      }       
                 </div>
                 <div className="mb-3">
                   <label htmlFor="descricao" className="form-label">descricao</label>

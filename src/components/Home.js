@@ -1,32 +1,34 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Col, Container, Row, Table } from 'reactstrap';
+import CardCliente from './CardCliente';
+import CardPedido from './CardPedido';
+import CardItemPedido from './CardItemPedido';
+import CardEntrega from './CardEntrega';
 
 const Home = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <ul className="navbar-nav">
-        <li className="nav-item">
-          <Link to="/cliente" className="nav-link">
-            Clientes
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/pedido" className="nav-link">
-            Pedidos
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/itemPedido" className="nav-link">
-            Itens dos pedidos
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link to="/entregas" className="nav-link">
-            Entregas
-          </Link>
-        </li>
-      </ul>
-    </nav>
+
+    <Container className='App'>
+          <Row>
+            <Col>
+              <h1 style={{ margin: "20px 0" }}>Faster DMS</h1>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <CardCliente />
+            </Col>
+            <Col>
+              <CardPedido />
+            </Col>
+            <Col>
+              <CardItemPedido />
+            </Col>
+            <Col>
+              <CardEntrega />
+            </Col>
+          </Row>
+    </Container>
   );
 }
 

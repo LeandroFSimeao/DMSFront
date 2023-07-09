@@ -26,8 +26,8 @@ const EntregaList = () => {
     setSelectedEntrega(entrega);
   };
 
-  const handleClickMap = () => {
-    setSelectedEntrega()
+  const handleClickMap = (entrega) => {
+    setSelectedEntrega(entrega)
     setShowMap(true);
   };
 
@@ -111,8 +111,8 @@ const EntregaList = () => {
                     <th scope='col'>ID</th>
                     <th scope='col'>Motorista</th>
                     <th scope='col'>Veiculo</th>
-                    <th scope='col'>Duração</th>
-                    <th scope='col'>Distância</th>
+                    <th scope='col'>Duração (minutos)</th>
+                    <th scope='col'>Distância (km)</th>
                     <th scope='col'> </th>
                     <th scope='col'> </th>
                   </tr>
@@ -124,6 +124,7 @@ const EntregaList = () => {
                       entrega={entrega}
                       onDelete={handleDeleteEntrega}
                       onEdit={handleSelectEntrega}
+                      onClickMap={handleClickMap}
                     />
                   ))}
                 </tbody>
@@ -154,8 +155,10 @@ const EntregaList = () => {
           <Row>
             <Col>
                     {showMap ? ( 
-                    <MapRota />
-                    ) : (<Button onClick={handleClickMap}> Abrir Mapa </Button>)}
+                    <MapRota 
+                    encodedPolyline={selectedEntrega.polyline}
+                    />
+                    ) : ('')}
             </Col>
           </Row>
         </Container>

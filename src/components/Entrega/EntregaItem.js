@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 
-const EntregaItem = ({ entrega, onDelete, onEdit }) => {
+const EntregaItem = ({ entrega, onDelete, onClickMap }) => {
 
-  const handleSetEntregaSelecionado = () => {
-    onEdit(entrega);
+
+  const handleClickMap = () => {
+    onClickMap(entrega);
   }
 
   const handleDelete = () => {
@@ -17,12 +18,12 @@ const EntregaItem = ({ entrega, onDelete, onEdit }) => {
         <><th scope="row">{entrega.idEntrega}</th>
           <td>{entrega.motorista}</td>
           <td>{entrega.veiculo}</td>
-          <td>{entrega.duracao}</td>
-          <td>{entrega.distancia}</td>
+          <td>{entrega.duracao/60}</td>
+          <td>{entrega.distancia/1000}</td>
           <td>
             <div style={{ width: "110px" }}>
               {' '}
-              <button type="button" onClick={handleSetEntregaSelecionado} className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#entregaModal">
+              <button type="button" onClick={handleClickMap} className="btn btn-primary">
                 Abrir Rota
               </button>
             </div>
